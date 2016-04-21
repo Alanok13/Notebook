@@ -13,6 +13,8 @@
                 <th><label for="entryName">Name:</label></th>
                 <td>
                     <sf:input path="entryName" size="15" id="entryName"/>
+                    <small>No spaces. Name length is less than than 20 characters</small>
+
                     <br>
                     <sf:errors path="entryName"/>
                 </td>
