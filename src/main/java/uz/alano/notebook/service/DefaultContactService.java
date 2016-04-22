@@ -1,7 +1,8 @@
-package uz.alano.notebook;
+package uz.alano.notebook.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uz.alano.notebook.dao.ContactsDAO;
 import uz.alano.notebook.model.Contact;
 
 import java.util.List;

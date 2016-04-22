@@ -7,7 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uz.alano.notebook.ContactService;
+import uz.alano.notebook.service.ContactService;
 import uz.alano.notebook.model.Contact;
 
 import javax.validation.Valid;
@@ -19,12 +19,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping("/contacts")
 public class ContactController {
 
-    private final ContactService contactService;
-
     @Autowired
-    public ContactController(ContactService contactService){
-        this.contactService = contactService;
-    }
+    private ContactService contactService;
 
     @RequestMapping(value = "/add", method=GET)
     public String addContactPage(Model model){

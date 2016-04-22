@@ -1,10 +1,10 @@
-package uz.alano.notebook;
+package uz.alano.notebook.service;
 
 import uz.alano.notebook.model.Contact;
 
 import java.util.List;
 
-public interface ContactsDAO {
+public interface ContactService {
     List<Contact> getContacts();
 
     Contact getContactByName(String entryName);

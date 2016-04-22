@@ -1,4 +1,4 @@
-package uz.alano.notebook;
+package uz.alano.notebook.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
