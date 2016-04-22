@@ -11,11 +11,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class PostgreSQLContactsDAO implements ContactsDAO {
+public class DefaultContactsDAO implements ContactsDAO {
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+
         createTable();
     }
 

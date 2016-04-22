@@ -1,36 +1,17 @@
 package uz.alano.notebook;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import uz.alano.notebook.model.Contact;
 
 import java.util.List;
 
-@Component
-public class ContactService {
+public interface ContactService {
+    List<Contact> getContacts();
 
-    private ContactsDAO contactsDAO;
-    @Autowired
-    public void setContactsDAO(ContactsDAO contactsDAO) {
-        this.contactsDAO = contactsDAO;
-    }
+    Contact getContactByName(String entryName);
 
-    public List<Contact> getContacts() {
-        return contactsDAO.getContacts();
-    }
+    void saveContact(Contact contact);
 
-    public Contact getContactByName(String entryName) {
-        return contactsDAO.getContactByName(entryName);
-    }
+    void updateContact(Contact contact);
 
-    public void saveContact(Contact contact) {
-        contactsDAO.saveContact(contact);
-    }
-
-    public void updateContact(Contact contact) {
-        contactsDAO.updateContact(contact);
-    }
-    public void removeContactByName(String entryName) {
-        contactsDAO.removeContactByName(entryName);
-    }
+    void removeContactByName(String entryName);
 }
