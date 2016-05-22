@@ -9,7 +9,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
 public class WebAppInitializer implements WebApplicationInitializer {
-
     @Override
     public void onStartup(ServletContext container) {
 
@@ -25,6 +24,5 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
-
     }
 }

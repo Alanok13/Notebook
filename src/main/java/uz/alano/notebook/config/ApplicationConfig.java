@@ -45,5 +45,4 @@ public class ApplicationConfig {
     public JdbcTemplate jdbcTemplate(){
         return new JdbcTemplate(dataSource());
     }
-
 }

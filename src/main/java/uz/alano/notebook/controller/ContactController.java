@@ -12,15 +12,23 @@ import uz.alano.notebook.model.Contact;
 
 import javax.validation.Valid;
 
+import java.util.Map;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-@RequestMapping("/contacts")
 public class ContactController {
 
     @Autowired
     private ContactService contactService;
+
+    @RequestMapping({"/","/home"})
+    public String showHomePage(Map<String, Object> model) {
+        model.put("contacts", contactService.getContacts());
+
+        return "contacts";
+    }
 
     @RequestMapping(value = "/add", method=GET)
     public String addContactPage(Model model){
@@ -28,18 +36,18 @@ public class ContactController {
         contact.setBirthDate("0001-01-01");
         model.addAttribute(contact);
 
-        return "contacts/add";
+        return "add";
     }
 
     @RequestMapping(value = "/add", method=POST)
     public String addContact(@Valid @ModelAttribute("contact") Contact contact, BindingResult bindingResult){
         if(bindingResult.hasErrors()) {
-            return "contacts/add";
+            return "add";
         }
 
         contactService.saveContact(contact);
 
-        return "redirect:/contacts/";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/edit", method=GET)
@@ -48,25 +56,24 @@ public class ContactController {
         Contact contact = contactService.getContactByName(name);
         model.addAttribute(contact);
 
-        return "contacts/edit";
+        return "edit";
     }
 
     @RequestMapping(value = "/edit", method=POST)
     public String addContactFromForm(@Valid @ModelAttribute("contact") Contact contact, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
-            return "contacts/edit";
+            return "edit";
         }
 
         contactService.updateContact(contact);
 
-        return "redirect:/contacts/";
+        return "redirect:/";
     }
-
 
     @RequestMapping(value = "/delete", method=GET)
     public String deleteContactRequest(@RequestParam("name") String name){
         contactService.removeContactByName(name);
 
-        return "redirect:/contacts/";
+        return "redirect:/";
     }
 }

@@ -28,12 +28,12 @@
                 <c:out value="${contact.phoneNumber}"/>
             </td>
             <td>
-                <a href="/contacts/edit?name=<c:out value="${contact.entryName}"/>">
+                <a href="edit?name=<c:out value="${contact.entryName}"/>">
                     <button>Edit</button>
                 </a>
             </td>
             <td>
-                <a href="/contacts/delete?name=<c:out value="${contact.entryName}"/>">
+                <a href="delete?name=<c:out value="${contact.entryName}"/>">
                     <button>Delete</button>
                 </a>
             </td>
@@ -41,7 +41,7 @@
     </c:forEach>
 </table>
 <br>
-<a href="/contacts/add">
+<a href="add">
     <button>Add new contact</button>
 </a>
 </body>
