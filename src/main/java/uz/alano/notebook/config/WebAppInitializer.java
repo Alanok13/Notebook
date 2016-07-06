@@ -11,7 +11,6 @@ import javax.servlet.ServletRegistration;
 public class WebAppInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext container) {
-
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(ApplicationConfig.class);
 
@@ -19,7 +18,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
         AnnotationConfigWebApplicationContext dispatcherServlet = new AnnotationConfigWebApplicationContext();
         dispatcherServlet.register(MvcConfig.class);
-
+        dispatcherServlet.register(SecurityConfig.class);
         ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(dispatcherServlet));
 
         dispatcher.setLoadOnStartup(1);
