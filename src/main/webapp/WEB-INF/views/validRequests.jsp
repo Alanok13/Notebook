@@ -32,7 +32,7 @@
     </c:forEach>
 </table>
 <br>
-<a href="requests/requestList">
+<a href="requestList">
     <button>Return to request list</button>
 </a>
 </body>

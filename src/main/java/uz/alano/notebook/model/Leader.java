@@ -23,5 +23,4 @@ public class Leader extends User {
     public void addRequest(Request request){
         requests.add(request);
     }
-
 }

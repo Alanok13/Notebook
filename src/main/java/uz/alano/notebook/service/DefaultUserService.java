@@ -1,5 +1,6 @@
 package uz.alano.notebook.service;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uz.alano.notebook.dao.UsersDAO;
@@ -7,7 +8,9 @@ import uz.alano.notebook.model.Leader;
 import uz.alano.notebook.model.Request;
 import uz.alano.notebook.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,19 +51,47 @@ public class DefaultUserService implements UserService {
 
     @Override
     public List<Request> processRequests() {
-        List<Leader> leaders = getUsers()
+        List<User> users = getUsers();
+        List<Leader> leaders = users
                 .stream()
                 .filter(x -> x.getClass() == Leader.class)
                 .map(x -> (Leader)x)
                 .collect(Collectors.toList());
-        Leader l = leaders.get(0);
-        List<Request> validRequests = l.getRequests()
+
+        List<Request> requests = leaders
                 .stream()
-                .filter(request -> leaders
-                        .stream()
-                        .allMatch(x -> x.getRequests().stream().anyMatch(r -> r.equals(request))))
+                .map(x -> x.getRequests())
+                .reduce(leaders.get(0).getRequests(), (x, y) -> GetIntersection(x, y));
+
+        return requests;
+    }
+
+    private List<Request> GetIntersection(List<Request> f, List<Request> s){
+        List<Request> intersections = f
+                .stream()
+                .map(r -> GetIntersection(r, s))
+                .filter(x -> x != null)
                 .collect(Collectors.toList());
 
-        return validRequests;
+        return intersections;
+    }
+
+    private Request GetIntersection(Request r, List<Request> requests){
+        if (!requests.stream().anyMatch(x -> x.isMatch(r))){
+            return null;
+        }
+
+        List<Request> matchRequests = requests
+                .stream()
+                .filter(request -> request.isMatch(r))
+                .map(request -> request.Intersection(r))
+                .collect(Collectors.toList());
+
+        Request optRequest = matchRequests
+                .stream()
+                .max((x,y) -> x.getEndDay() - x.getStartDay() > y.getEndDay() - y.getStartDay()? 1 : -1)
+                .get();
+
+        return optRequest;
     }
 }

@@ -9,7 +9,7 @@
 <h2>New request:</h2>
 <sf:form method="POST" modelAttribute="request">
     <fieldset>
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
         <table cellspacing="0">
             <tr>
                 <th><label for="country">Country:</label></th>

@@ -7,6 +7,22 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Request {
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public void setStartDay(int startDay) {
+        this.startDay = startDay;
+    }
+
+    public void setEndDay(int endDay) {
+        this.endDay = endDay;
+    }
+
     private String country;
 
     private int month;
@@ -42,20 +58,32 @@ public class Request {
         return endDay;
     }
 
-    public Boolean equals(Request other)
+    public Boolean isMatch(Request other)
     {
-        return Objects.equals(this.country, other.country) &&
+        boolean isMatch = Objects.equals(this.country, other.country) &&
                 this.month == other.month &&
-                this.startDay == other.startDay &&
-                this.endDay == other.endDay;
+                this.startDay <= other.endDay &&
+                this.endDay >= other.startDay;
+
+        return isMatch;
     }
 
     public static Request fromMap(Map<String, Object> map){
         String country = (String) map.get("country");
-        int month = (int)map.get("monthNumber");
-        int startDay = (int)map.get("startDay");
-        int endDay = (int)map.get("endDay");
+        int month = (int)map.get("month");
+        int startDay = (int)map.get("startday");
+        int endDay = (int)map.get("endday");
         Request request = new Request(country, month, startDay, endDay);
+
+        return request;
+    }
+
+    public Request Intersection(Request r) {
+        Request request = new Request();
+        request.country = r.getCountry();
+        request.month = r.getMonth();
+        request.startDay = r.getStartDay() > this.startDay ? r.getStartDay() : this.startDay;
+        request.endDay = r.getEndDay() < this.endDay ? r.getEndDay() : this.endDay;
 
         return request;
     }

@@ -2,6 +2,7 @@ package uz.alano.notebook.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,7 +55,7 @@ public class RequestController {
     @RequestMapping(value = "requests/requestList", method=GET)
     public String showRequestList(Map<String, Object> model){
         List<Request> requests = userService.getRequests();
-        model.put("requestList", requests);
+        model.put("requests", requests);
 
         return "requestList";
     }
@@ -66,15 +67,18 @@ public class RequestController {
     }
 
     @RequestMapping(value = "requests/addRequest", method=POST)
-    public String addRequest(@Valid @ModelAttribute("request") Request request, BindingResult bindingResult){
+    public String addRequest(Request request, BindingResult bindingResult){
         if(bindingResult.hasErrors()) {
             return "addRequest";
         }
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        userService.saveRequest(request, user.getLogin());
+        org.springframework.security.core.userdetails.User user =
+                (org.springframework.security.core.userdetails.User)
+                        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return "redirect:/";
+        userService.saveRequest(request, user.getUsername());
+
+        return "requestList";
     }
 
     @RequestMapping(value = "requests/processRequests", method=GET)
@@ -87,6 +91,6 @@ public class RequestController {
             return "validRequests";
         }
 
-        return "redirect:/";
+        return "requestList";
     }
 }

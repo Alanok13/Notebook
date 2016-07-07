@@ -32,10 +32,10 @@
     </c:forEach>
 </table>
 <br>
-<a href="requests/addRequest">
+<a href="addRequest">
     <button>Add new request</button>
 </a>
-<a href="requests/processRequests">
+<a href="processRequests">
     <button>Process requests</button>
 </a>
 </body>

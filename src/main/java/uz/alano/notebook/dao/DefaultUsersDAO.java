@@ -48,7 +48,8 @@ public class DefaultUsersDAO implements UsersDAO {
             String name = (String) m.get("userName");
             String login = (String) m.get("login");
             String pass = (String) m.get("password");
-            if (m.get("userType") == "Leader"){
+            String userType = (String) m.get("userType");
+            if (userType.equals("LEADER")){
                 String q = "SELECT * FROM public.requests WHERE login = ?";
                 List<Request> requests = jdbcTemplate.queryForList(q, name)
                         .stream()
@@ -69,7 +70,7 @@ public class DefaultUsersDAO implements UsersDAO {
     }
 
     public void saveRequest(Request request, String login){
-        final String insertQuery = "INSERT INTO public.requests (country, monthNumber, startDay, endDay, login) " +
+        final String insertQuery = "INSERT INTO public.requests (country, month, startDay, endDay, login) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(insertQuery,
@@ -127,7 +128,7 @@ public class DefaultUsersDAO implements UsersDAO {
 
     @Override
     public void removeAllRequests() {
-        String query = "DELETE * FROM public.requests";
+        String query = "DELETE FROM public.requests";
         jdbcTemplate.update(query);
     }
 }

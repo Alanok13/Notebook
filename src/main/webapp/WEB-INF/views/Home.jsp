@@ -10,8 +10,8 @@
 <a href="registration">
     <button>Registration</button>
 </a>
-<a href="/requests/requestList">
-    <button>Login</button>
+<a href="requests/requestList">
+    <button>Requests</button>
 </a>
 </body>
 </html>
